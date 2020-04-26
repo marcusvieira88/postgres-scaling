@@ -77,12 +77,12 @@ Connect to the database:
 \c postgres 
 ```
 
-Set the replication factor (number of workers that will keep a copy of the data):
+Set the replication factor (number of workers that will keep a copy of table data):
 ```
 SET citus.shard_replication_factor=2;
 ```
 
-In another terminal start the spring application to create the Product table(spring.jpa.hibernate.ddl-auto=create) into citus cluster:
+In another terminal start the spring application to create the Product table(spring.jpa.hibernate.ddl-auto=create) into Citus cluster:
 ```
 mvn spring-boot:run
 ```
@@ -94,7 +94,7 @@ SELECT create_distributed_table('public.products', 'id');
 
 Now we need to add some data to execute our queries, for it you can use our Project REST API.
 
-After insert some products we can check:
+After insert some products you can check:
 ```
 -- get distribution column name for products table
 SELECT column_to_column_name(logicalrelid, partkey) AS dist_col_name
@@ -129,7 +129,7 @@ SELECT shardid, shardstate, shardlength, nodename, nodeport, placementid
    );
 ```
 
-Shut down Postres Citus cluster:
+Shut down Postgres Citus cluster:
 ```
 docker-compose -p citus down
 ```
